@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Allgood Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Ensures all images are responsive */
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+        /* Style for the active navigation link */
+        .active-nav-link {
+            font-weight: 600;
+            color: #D34716; /* allgood-burnt-orange: #D34716 */
+            text-decoration: underline;
+            text-decoration-color: #D34716;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 6px;
+        }
+        .collapsible-section.open .collapsible-arrow {
+            transform: rotate(180deg);
+            color: #D34716; 
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'literata': ['Literata', 'serif'],
+                    },
+                    // Allgood Academy Brand Colors
+                    colors: {
+                        'allgood-dark-cyan': '#357889',      /* --brand-secondary / Deep Cyan */
+                        'allgood-light-cyan': '#357889',     /* Mapping to Deep Cyan for consistency */
+                        'allgood-burnt-orange': '#D34716',   /* --brand-primary / Burnt Orange */
+                        'allgood-light-orange': '#EB8D69',   /* --brand-hover-light */
+                    },
+                    fontSize: {
+                        'xxs': ['0.6rem', { lineHeight: '0.9rem' }],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-inter">
+
+    <!-- Header and Navigation (Reused from index.html for consistency) -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="px-8 py-4">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo on the left (Allgood Academy Image Logo) -->
+                <a href="index.html" class="cursor-pointer">
+                    <img src="https://i.ibb.co/ynkwWGhF/New-Transparent-Logo-1.png" alt="Allgood Academy Logo" class="h-12 w-auto">
+                </a>
+                
+                <!-- Navigation Links on the right -->
+                <div id="main-nav" class="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
+                    
+                    <!-- Home Dropdown (ACTIVE) -->
+                    <div class="relative group">
+                        <a href="index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Home</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </a>
+                        <div class="absolute left-0 w-40 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="contact_us.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Contact Us</a>
+                        </div>
+                    </div>
+
+                    <!-- Educational Games -->
+                    <a href="educational_games.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
+
+                    <!-- Purpose-Driven Learning -->
+                    <a href="purpose_driven_learning.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">
+                        Purpose-Driven Learning
+                    </a>
+                    
+                    <!-- Dropdown Menu: Other Allgood Things -->
+                    <div class="relative group">
+                        <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Other Allgood Things</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Content -->
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto bg-white p-8 sm:p-12 rounded-xl shadow-2xl border border-gray-200">
+
+            <h1 class="font-literata text-4xl sm:text-5xl font-bold text-center text-allgood-burnt-orange mb-4 border-b-2 border-allgood-light-orange pb-3">
+                Privacy Policy
+            </h1>
+            <p class="text-center text-gray-500 mb-8 text-sm">Last Updated: October 7, 2025</p>
+
+            <p class="mb-8 leading-relaxed text-lg text-center font-semibold">
+                This is the <strong class="font-bold">simple, pragmatic version</strong> of our policy. We believe in transparency and keeping things clear.
+            </p>
+
+            <!-- 1. What We Collect and Why -->
+            <section class="mb-10 p-6 rounded-lg border border-gray-100 bg-gray-50">
+                <h2 class="font-literata text-2xl font-bold text-allgood-dark-cyan mb-4">
+                    1. What We Collect and How We Use It
+                </h2>
+                <p class="mb-4">
+                    As a small, free content hub, we only collect the essentials needed to operate and make our site better for you.
+                </p>
+                <ul class="list-disc pl-5 space-y-3 text-gray-700">
+                    <li>
+                        <strong class="font-bold">Contact Information:</strong> When you use our Contact Form, we collect the name and email you provide. <strong class="font-bold">We only use this to respond to your specific message.</strong>
+                    </li>
+                    <li>
+                        <strong class="font-bold">Website Usage:</strong> We use simple analytics (like page views and browser type) to understand which of our free resources are most useful. This helps us make <strong class="font-bold">pragmatic decisions</strong> about what content to create next.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 2. Our Simple Promise -->
+            <section class="mb-10 p-6 rounded-lg border border-gray-100 bg-gray-50">
+                <h2 class="font-literata text-2xl font-bold text-allgood-burnt-orange mb-4">
+                    2. Our Simple Promise
+                </h2>
+                <ul class="list-disc pl-5 space-y-3 text-gray-700">
+                    <li>
+                        <strong class="font-bold">We do not sell your personal information.</strong> Ever.
+                    </li>
+                    <li>
+                        We only share data when necessary to run the website (e.g., with secure hosting providers) or if legally required.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Contact Information (Simplified) -->
+            <section class="border-t pt-8">
+                <h2 class="font-literata text-2xl font-bold text-allgood-dark-cyan mb-4">
+                    Have Questions?
+                </h2>
+                <p class="text-gray-700">
+                    If you want to know what data we have or if you have any other questions, please reach out directly:
+                </p>
+                <p class="mt-4">
+                    <a href="contact_us.html" class="text-allgood-burnt-orange font-bold hover:text-allgood-light-orange transition duration-200 underline">
+                        Use our online Contact Form
+                    </a>
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer (Reused from index.html for consistency) -->
+    <footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-8 flex justify-between items-center text-gray-500">
+            <a href="privacy.html" class="hover:text-allgood-light-cyan transition-colors duration-300 active-nav-link">Privacy Policy</a>
+            <p>Copyright © 2025, Allgood Academy</p>
+        </div>
+    </footer>
+</body>
+</html>

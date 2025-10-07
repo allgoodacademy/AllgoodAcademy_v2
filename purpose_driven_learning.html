@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purpose-Driven Learning | Allgood Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:wght@400;500;600;600&display=swap" rel="stylesheet">
+    <!-- Libraries for interactive hero --><script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <style>
+        /* Ensures all images are responsive */
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+        /* Style for the active navigation link (Burnt Orange for active game/home) */
+        .active-nav-link {
+            font-weight: 600;
+            color: #E76F51; /* allgood-burnt-orange */
+            text-decoration: underline;
+            text-decoration-color: #E76F51; /* allgood-burnt-orange */
+            text-decoration-thickness: 2px;
+            text-underline-offset: 6px;
+        }
+        /* Styles for collapsible sections */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .collapsible-section.open .collapsible-content {
+            max-height: 2000px; /* Large enough to fit content */
+        }
+        .collapsible-section.open .collapsible-arrow {
+            transform: rotate(180deg);
+            color: #E76F51; /* Change color to burnt orange when open */
+        }
+        /* Base tile link style */
+        .course-tile-link {
+            position: relative;
+            z-index: 10;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+            width: 100%; 
+        }
+        /* Minimal visual feedback on hover */
+        .course-tile-link:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow to signal interactivity */
+        }
+        /* Modal Style - Cyan Border for Courses */
+        .course-tile-link.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            box-shadow: 0 12px 20px 8px rgba(0, 0, 0, 0.4);
+            border-color: #005F73; /* Deep Cyan Border for Courses */
+            max-width: 600px; 
+            width: auto;
+            min-width: 320px;
+            height: auto;
+            background-color: white;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease-in-out;
+        }
+
+        /* Hide the short content when expanded */
+        .course-tile-link.expanded .course-content-short {
+            display: none;
+        }
+
+        /* Show the full content when expanded */
+        .course-tile-link.expanded .course-content-full {
+            display: block;
+        }
+        
+        /* Hide full content by default and set its properties */
+        .course-content-full {
+            display: none;
+            padding: 2rem;
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+        .course-content-full ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 40;
+            display: none;
+            cursor: pointer;
+        }
+        .modal-overlay.active {
+            display: block;
+        }
+        .close-card-button {
+            z-index: 60;
+        }
+        
+        /* Ensure iframe is full width and height is handled by content flow */
+        #course-view iframe { 
+            height: calc(100vh - 116px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'literata': ['Literata', 'serif'],
+                    },
+                    // Allgood Academy Brand Colors
+                    colors: {
+                        'allgood-dark-cyan': '#005F73',
+                        'allgood-light-cyan': '#0A9396',
+                        'allgood-burnt-orange': '#E76F51',
+                        'allgood-light-orange': '#F4A261',
+                    },
+                    fontSize: {
+                        'xxs': ['0.6rem', { lineHeight: '0.9rem' }],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-allgood-dark-cyan text-gray-800 font-inter">
+
+    <!-- Header and Navigation --><header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="px-8 py-4">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo --><a href="index.html" class="cursor-pointer">
+                    <img src="https://i.ibb.co/ynkwWGhF/New-Transparent-Logo-1.png" alt="Allgood Academy Logo" class="h-12 w-auto">
+                </a>
+                
+                <!-- Navigation Links --><div id="main-nav" class="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
+                    
+                    <!-- Home Dropdown --><div class="relative group">
+                        <a href="index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Home</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </a>
+                        <div class="absolute left-0 w-40 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <!-- FIXED: Pointing to the internal contact_us.html file -->
+                            <a href="contact_us.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Educational Games --><a href="educational_games.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
+
+                    <!-- Purpose-Driven Learning (ACTIVE LINK) --><a href="purpose_driven_learning.html" class="nav-link active-nav-link transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">
+                        Purpose-Driven Learning
+                    </a>
+                    
+                    <!-- Dropdown Menu: Other Allgood Things --><div class="relative group">
+                        <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Other Allgood Things</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Modal overlay --><div id="modal-overlay" class="modal-overlay"></div>
+
+    <!-- Page Content Wrapper --><div id="page-content">
+        <main id="purpose-driven-learning" class="page container mx-auto px-6 py-12">
+             <div class="max-w-6xl mx-auto"> 
+                <section class="text-center mb-16">
+                    <!-- Headline: Burnt Orange for maximum visibility --><h1 class="font-literata text-4xl md:text-5xl font-bold text-white mb-6">
+                        The <span class="text-allgood-burnt-orange">Purpose-Driven Learning</span> Hub
+                    </h1>
+                </section>
+                <div class="space-y-6">
+                    
+                    <!-- SECTION 1: CORE MINDSET (Pragmatic Learning & Unwritten Rules) -->
+                    <div class="collapsible-section bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden open">
+                        <button class="collapsible-header w-full flex justify-between items-center p-6 sm:p-8 text-left">
+                            <!-- Category Name: Core Mindset -->
+                            <h2 class="font-literata text-xl sm:text-2xl font-bold text-allgood-dark-cyan">Core Mindset</h2>
+                            <svg class="collapsible-arrow w-6 h-6 text-allgood-dark-cyan transition-transform duration-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                        </button>
+                        <div class="collapsible-content">
+                            <div class="px-6 sm:px-8 pb-8 pt-0">
+                                <div class="border-t border-gray-200 pt-6">
+                                    <!-- Grid for 3 columns on large screens (showing 2 courses here) -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+                                        
+                                        <!-- COURSE TILE 1: Pragmatic Learning --><div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/Pragmatic_Learning_Turning_Knowledge_into_Action_html_2/index.html" data-course-id="pragmatic-learning">
+                                            <div class="p-4 flex flex-col flex-grow course-content-short">
+                                                <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">Pragmatic Learning: Turning Knowledge into Action</h3>
+                                                <p class="text-gray-600 mt-2 text-sm flex-grow">This short, 25-minute, powerful guide helps you shift from <strong>collecting facts</strong> to <strong>solving problems</strong> by taking purposeful action.</p>
+                                            </div>
+                                            <!-- Full Content View (Hidden by default) --><div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Pragmatic Learning: Turning Knowledge into Action</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">If you feel like you’re stuck in a cycle of learning—reading books and watching videos without seeing real results—you're not alone. The world is full of information. But true learning isn’t about what you know; it’s about what you do with it. This is a short, 25-minute guide to becoming a <strong>Pragmatic Learner</strong>.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">In this course, you will:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Pinpoint the mindset that keeps you hoarding information instead of acting on it.</li>
+                                                        <li>Learn to cut through the noise by focusing only on what's immediately useful.</li>
+                                                        <li>Master a simple method for turning any goal into a tangible first step.</li>
+                                                        <li>Build a repeatable system for connecting every small win to your bigger goals.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- COURSE TILE 2: The Unwritten Rules --><div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/The_Unwritten_Rules_Navigating_Social_Emotional_Intelligence_html_5/index.html" data-course-id="unwritten-rules">
+                                            <div class="p-4 flex flex-col flex-grow course-content-short">
+                                                <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">The Unwritten Rules: Navigating Social & Emotional Intelligence</h3>
+                                                <p class="text-gray-600 mt-2 text-sm flex-grow">Your 30-minute roadmap to building <strong>social and emotional confidence</strong>, understanding unspoken cues, and thriving in any group setting.</p>
+                                            </div>
+                                            <!-- Full Content View (Hidden by default) --><div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">The Unwritten Rules: Navigating Social & Emotional Intelligence</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">Welcome to your 30-minute guide to the unwritten rules of social and emotional intelligence. Navigating friendships, group projects, and family can sometimes feel more complicated than a pop quiz, right? This course is your roadmap to gaining the <strong>confidence to thrive</strong> in any social situation.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Over our journey, you'll discover how to:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Master the art of listening so you can connect with anyone.</li>
+                                                        <li>Crack the code of collaboration to turn any group into a dream team.</li>
+                                                        <li>Give and receive feedback with confidence and grace.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SECTION 2: DIGITAL LITERACY (AI Co-Pilot) -->
+                    <div class="collapsible-section bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden open">
+                        <button class="collapsible-header w-full flex justify-between items-center p-6 sm:p-8 text-left">
+                            <!-- Category Name: Digital Literacy -->
+                            <h2 class="font-literata text-xl sm:text-2xl font-bold text-allgood-dark-cyan">Digital Literacy</h2>
+                            <svg class="collapsible-arrow w-6 h-6 text-allgood-dark-cyan transition-transform duration-300 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                        </button>
+                        <div class="collapsible-content">
+                            <div class="px-6 sm:px-8 pb-8 pt-0">
+                                <div class="border-t border-gray-200 pt-6">
+                                    <!-- Grid for 3 columns on large screens (showing 1 course here) -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+                                        
+                                        <!-- COURSE TILE 3: The AI Co-Pilot --><div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/The_AI_Co-Pilot_A_15-Minute_Microlearning_Course_html_4/index.html" data-course-id="ai-co-pilot">
+                                            <div class="p-4 flex flex-col flex-grow course-content-short">
+                                                <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">The AI Co-Pilot: A 15-Minute Microlearning Course</h3>
+                                                <p class="text-gray-600 mt-2 text-sm flex-grow">Move past the hype and learn the one skill that makes AI your most valuable asset: <strong>how to talk to it</strong> (prompting and collaboration).</p>
+                                            </div>
+                                            <!-- Full Content View (Hidden by default) --><div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">The AI Co-Pilot: A 15-Minute Microlearning Course</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">The world of work is changing fast. Between AI, endless emails, and a constant flow of information, it’s easy to feel overwhelmed. You don't just need new tools—you need a new mindset. This course is your first step. In less than 15 minutes, we’ll teach you the one skill that will make AI your most valuable <strong>co-pilot: how to talk to it</strong>.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Outcome:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Master the core concepts of effective prompting to gain actionable results from any AI tool.</li>
+                                                        <li>Adopt a <strong>co-pilot mindset</strong> to integrate AI into your daily workflow, increasing efficiency.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer --><footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-8 flex justify-between items-center text-gray-500">
+            <a href="privacy.html" class="hover:text-allgood-light-cyan transition-colors duration-300">Privacy Policy</a>
+            <p>Copyright © 2025, Allgood Academy</p>
+        </div>
+    </footer>
+
+    <!-- Course Iframe View --><div id="course-view" style="display: none;">
+        <div class="bg-white text-center py-4 border-b">
+             <p class="text-allgood-burnt-orange font-inter text-xs">Get your badge! Complete the form at the end of this course to receive a personalized <strong class="font-bold">Allgood <span class="text-allgood-dark-cyan">Academy</span></strong> badge.</p>
+        </div>
+        <!-- IMPORTANT: iframe height is no longer fixed in CSS, relying on browser's native scrolling --><iframe id="course-iframe" class="w-full h-[calc(100vh-116px)]" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <!-- SVG for the progress circle gradient --><svg width="0" height="0" class="absolute">
+        <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <!-- Gradient from Light Cyan to Burnt Orange --><stop offset="0%" style="stop-color:rgb(10,147,150);stop-opacity:1" /> 
+                <stop offset="100%" style="stop-color:rgb(231,111,81);stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <script>
+        // Mapping of URL paths to game file URLs
+        const COURSE_MAP = {
+            // Updated URLs for the Articulate Rise courses hosted externally
+            'pragmatic-learning': "https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/Pragmatic_Learning_Turning_Knowledge_into_Action_html_2/index.html",
+            'unwritten-rules': "https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/The_Unwritten_Rules_Navigating_Social_Emotional_Intelligence_html_5/index.html",
+            'ai-co-pilot': "https://theallgoodacademy.s3.us-east-2.amazonaws.com/courses/The_AI_Co-Pilot_A_15-Minute_Microlearning_Course_html_4/index.html",
+        };
+
+        // Function to determine the current course ID from the URL hash
+        function getCourseIdFromHash() {
+            // Check for a clean hash structure: #course/course-id
+            const hash = window.location.hash.substring(1); // Remove '#'
+            if (hash.startsWith('course/')) {
+                const courseId = hash.split('/')[1];
+                return courseId || null;
+            }
+            return null;
+        }
+
+        function loadCourseView(courseId) {
+            const courseUrl = COURSE_MAP[courseId];
+            if (!courseUrl) {
+                 // If the ID is invalid or null, return to the catalog view
+                showCatalogView();
+                return;
+            }
+
+            const pageContent = document.getElementById('page-content');
+            const footer = document.querySelector('footer');
+            const courseView = document.getElementById('course-view');
+            const courseIframe = document.getElementById('course-iframe');
+
+            courseIframe.src = courseUrl;
+            pageContent.style.display = 'none';
+            if (footer) footer.style.display = 'none';
+            courseView.style.display = 'block';
+
+            // FIX: Only push the hash part to history to avoid SecurityError related to path manipulation
+            const newHash = `#course/${courseId}`;
+            if (window.location.hash !== newHash) {
+                history.pushState({ courseId: courseId }, '', newHash);
+            }
+        }
+        
+        function showCatalogView() {
+            const pageContent = document.getElementById('page-content');
+            const footer = document.querySelector('footer');
+            const courseView = document.getElementById('course-view');
+
+            pageContent.style.display = 'block';
+            if (footer) footer.style.display = 'block';
+            courseView.style.display = 'none';
+            
+            // FIX: Safely clear the hash using window.location.hash to avoid SecurityError
+            if (window.location.hash !== '') {
+                 window.location.hash = '';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- Initialization Check (Handles direct share links) ---
+            const initialCourseId = getCourseIdFromHash();
+            if (initialCourseId) {
+                // If a hash is found, load the course immediately.
+                loadCourseView(initialCourseId);
+            }
+            
+            // --- History API Listener (Handles browser Back/Forward buttons) ---
+            window.addEventListener('popstate', (event) => {
+                const courseId = getCourseIdFromHash();
+                if (courseId) {
+                    loadCourseView(courseId);
+                } else {
+                    showCatalogView();
+                }
+            });
+            
+            // --- Catalog Interaction Logic (Simplified for Tap/Click) ---
+            function getCourseTilesAndAddListeners() {
+                document.querySelectorAll('.course-tile-link').forEach(tile => {
+                    // Update data-course-id attribute
+                    let courseId = tile.dataset.courseId;
+                    if (!courseId) {
+                        courseId = tile.querySelector('h3').textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                        tile.dataset.courseId = courseId;
+                    }
+                    
+                    // --- Button Handlers ---
+                    const closeButton = tile.querySelector('.close-card-button');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const exitButton = tile.querySelector('.exit-button');
+                    if (exitButton) {
+                        exitButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                             if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const launchButton = tile.querySelector('.launch-course-button');
+                    if (launchButton) {
+                        launchButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const launchCourseId = tile.dataset.courseId;
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                            if (launchCourseId) {
+                                loadCourseView(launchCourseId);
+                            }
+                        });
+                    }
+                    
+                    // --- Overlay Click Handler (Closes the modal) ---
+                    document.getElementById('modal-overlay').addEventListener('click', function() {
+                         document.querySelectorAll('.course-tile-link.expanded').forEach(expandedTile => {
+                            expandedTile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                         });
+                    });
+
+                    // --- PRIMARY CLICK/TAP HANDLER (Opens the modal) ---
+                    tile.addEventListener('click', function(e) {
+                        // Check if the click target is already one of the action buttons inside the card
+                        const isInternalButton = e.target.closest('.launch-course-button, .exit-button, .close-card-button');
+                        if (isInternalButton) {
+                            // If it's a button, let the button's specific handler run and return
+                            return;
+                        }
+                        
+                        e.preventDefault(); 
+                        
+                        // Toggle the expanded state on any click of the card body
+                        if (tile.classList.contains('expanded')) {
+                            // Close the currently expanded card
+                            tile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                        } else {
+                            // Close any other open cards
+                            document.querySelectorAll('.course-tile-link.expanded').forEach(openTile => {
+                                if(openTile !== tile) {
+                                    openTile.classList.remove('expanded');
+                                }
+                            });
+                            // Open this card
+                            tile.classList.add('expanded');
+                            document.getElementById('modal-overlay').classList.add('active');
+                        }
+                    });
+                });
+            }
+            
+            getCourseTilesAndAddListeners();
+
+            // --- Collapsible Section Logic ---
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const section = header.parentElement;
+                    section.classList.toggle('open');
+                });
+            });
+            
+            // --- Disable Right-Click ---
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+
+</body>
+</html>
