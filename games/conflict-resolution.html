@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conflict Resolution Challenge | Allgood Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- PLACE GOOGLE ANALYTICS (GA4) SCRIPT HERE -->
+    <!-- This dedicated page ensures the challenge launch is registered as a unique page view. -->
+    
+    <style>
+        /* Ensures all images are responsive */
+        img { max-width: 100%; height: auto; }
+        /* Style for the active navigation link */
+        .active-nav-link {
+            font-weight: 600;
+            color: #D34716; /* allgood-burnt-orange */
+            text-decoration: underline;
+            text-decoration-color: #D34716;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 6px;
+        }
+        /* Custom height to make the iframe fill the screen below the header/banner */
+        #game-iframe {
+            height: calc(100vh - 116px);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'literata': ['Literata', 'serif'],
+                    },
+                    colors: {
+                        'allgood-dark-cyan': '#357889',
+                        'allgood-light-cyan': '#357889',
+                        'allgood-burnt-orange': '#D34716',
+                        'allgood-light-orange': '#EB8D69',
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-inter overflow-hidden">
 
+    <!-- Header and Navigation (Reused) -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="px-8 py-4">
+            <div class="container mx-auto flex items-center justify-between">
+                <a href="../index.html" class="cursor-pointer">
+                    <img src="https://i.ibb.co/ynkwWGhF/New-Transparent-Logo-1.png" alt="Allgood Academy Logo" class="h-12 w-auto">
+                </a>
+                <div id="main-nav" class="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
+                    <div class="relative group">
+                        <a href="../index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Home</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </a>
+                        <div class="absolute left-0 w-40 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="../contact_us.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Active link highlight points to the parent catalog -->
+                    <a href="../educational_games.html" class="nav-link active-nav-link transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
+                    <a href="../purpose_driven_learning.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">
+                        Purpose-Driven Learning
+                    </a>
+                    <div class="relative group">
+                        <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Other Allgood Things</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                        <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Game View -->
+    <div id="game-view" class="w-screen h-screen">
+        <div class="bg-white text-center py-4 border-b">
+             <p class="text-allgood-burnt-orange font-inter text-xs">Get your badge! Answer all of the questions correctly to receive a personalized badge.</p>
+        </div>
+        <iframe id="game-iframe" 
+                src="https://theallgoodacademy.s3.us-east-2.amazonaws.com/Conflict+Resolution/index.html" 
+                class="w-full" 
+                frameborder="0" 
+                allowfullscreen 
+                title="Conflict Resolution Challenge"></iframe>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t">
+        <div class="container mx-auto px-6 py-8 flex justify-between items-center text-gray-500">
+            <a href="../privacy.html" class="hover:text-allgood-light-cyan transition-colors duration-300">Privacy Policy</a>
+            <p>Copyright © 2025, Allgood Academy</p>
+        </div>
+    </footer>
+
+</body>
+</html>
