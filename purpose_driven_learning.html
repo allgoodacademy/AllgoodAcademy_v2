@@ -20,6 +20,8 @@
     <!-- Libraries for interactive hero -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <!-- NEW DEPENDENCY: Font Awesome for high-quality social icons (Added for consistency) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8y/H0wZ/U9fKjT2YtGz3l8L035qQ7B1tT84YhE/v9z0V9Wk+I2v74W83jLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- PLACE GOOGLE ANALYTICS (GA4) SCRIPT HERE -->
 
     <style>
@@ -28,12 +30,12 @@
           max-width: 100%;
           height: auto;
         }
-        /* Style for the active navigation link (Burnt Orange for active game/home) */
+        /* Style for the active navigation link (UPDATED COLOR) */
         .active-nav-link {
             font-weight: 600;
-            color: #E76F51; /* allgood-burnt-orange */
+            color: #D34716; /* allgood-burnt-orange: #D34716 */
             text-decoration: underline;
-            text-decoration-color: #E76F51; /* allgood-burnt-orange */
+            text-decoration-color: #D34716;
             text-decoration-thickness: 2px;
             text-underline-offset: 6px;
         }
@@ -48,7 +50,7 @@
         }
         .collapsible-section.open .collapsible-arrow {
             transform: rotate(180deg);
-            color: #E76F51; /* Change color to burnt orange when open */
+            color: #D34716; /* Change color to burnt orange (UPDATED COLOR) when open */
         }
         /* Base tile link style */
         .course-tile-link {
@@ -74,12 +76,12 @@
                         'inter': ['Inter', 'sans-serif'],
                         'literata': ['Literata', 'serif'],
                     },
-                    // Allgood Academy Brand Colors (Using updated hex values for consistency)
+                    // Allgood Academy Brand Colors (FIXED TO USE OFFICIAL HEX CODES)
                     colors: {
-                        'allgood-dark-cyan': '#357889',
-                        'allgood-light-cyan': '#357889',
-                        'allgood-burnt-orange': '#e76f51',
-                        'allgood-light-orange': '#EB8D69',
+                        'allgood-dark-cyan': '#357889',      /* Deep Cyan */
+                        'allgood-light-cyan': '#357889',     /* Mapping to Deep Cyan for consistency */
+                        'allgood-burnt-orange': '#D34716',   /* Burnt Orange */
+                        'allgood-light-orange': '#EB8D69',   /* Light Orange (Hover) */
                     },
                     fontSize: {
                         'xxs': ['0.6rem', { lineHeight: '0.9rem' }],
@@ -91,7 +93,7 @@
 </head>
 <body class="bg-allgood-dark-cyan text-gray-800 font-inter">
 
-    <!-- Header and Navigation -->
+    <!-- Header and Navigation (SYNCHRONIZED) -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="px-8 py-4">
             <div class="container mx-auto flex items-center justify-between">
@@ -112,19 +114,20 @@
                             </svg>
                         </a>
                         <div class="absolute left-0 w-40 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
-                            <!-- FIXED: Pointing to the internal contact_us.html file -->
+                            <!-- Corrected Contact Us Link -->
                             <a href="contact_us.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Contact Us</a>
                         </div>
                     </div>
+
                     <!-- Educational Games -->
                     <a href="educational_games.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
 
-                    <!-- Purpose-Driven Learning (ACTIVE LINK) -->
+                    <!-- Purpose-Driven Learning (ACTIVE LINK - Correct) -->
                     <a href="purpose_driven_learning.html" class="nav-link active-nav-link transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">
                         Purpose-Driven Learning
                     </a>
                     
-                    <!-- Dropdown Menu: Other Allgood Things -->
+                    <!-- Dropdown Menu: Other Allgood Things (NOW INCLUDES GoodBlocks Hub) -->
                     <div class="relative group">
                         <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
                             <span>Other Allgood Things</span>
@@ -133,6 +136,9 @@
                             </svg>
                         </button>
                         <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <!-- ADDED: GoodBlocks Hub Link -->
+                            <a href="goodblocks_hub.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">GoodBlocks Hub</a>
+
                             <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
                         </div>
                     </div>
@@ -257,5 +263,3 @@
 
 </body>
 </html>
-
-
