@@ -65,8 +65,67 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); 
             transform: translateY(-4px); /* Subtle lift */
         }
+
+        /* * MODAL STYLES COPIED FROM CANVAS 1 
+         */
+        /* Modal Style - Deep Cyan Border for Courses */
+        .course-tile-link.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            box-shadow: 0 12px 20px 8px rgba(0, 0, 0, 0.4);
+            border-color: #357889; /* Deep Cyan Border for Courses */
+            max-width: 600px; 
+            width: auto;
+            min-width: 320px;
+            height: auto;
+            background-color: white;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease-in-out;
+        }
+
+        /* Hide the short content when expanded */
+        .course-tile-link.expanded .course-content-short {
+            display: none;
+        }
+
+        /* Show the full content when expanded */
+        .course-tile-link.expanded .course-content-full {
+            display: block;
+        }
         
-        /* Modal-related styles are no longer needed here as the modal is removed */
+        /* Hide full content by default and set its properties */
+        .course-content-full {
+            display: none;
+            padding: 2rem;
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+        .course-content-full ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 40;
+            display: none;
+            cursor: pointer;
+        }
+        .modal-overlay.active {
+            display: block;
+        }
+        .close-card-button {
+            z-index: 60;
+        }
+        /* END MODAL STYLES */
     </style>
     <script>
         tailwind.config = {
@@ -147,7 +206,8 @@
         </nav>
     </header>
     
-    <!-- Modal overlay is removed -->
+    <!-- Modal overlay (COPIED FROM CANVAS 1) -->
+    <div id="modal-overlay" class="modal-overlay"></div>
 
     <!-- Page Content Wrapper -->
     <div id="page-content">
@@ -174,23 +234,74 @@
                                     <!-- Grid for 3 columns on large screens (showing 2 courses here) -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
                                         
-                                        <!-- COURSE TILE 1: Pragmatic Learning (Link to new dedicated page) -->
-                                        <a href="courses/pragmatic-learning.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center">
+                                        <!-- COURSE TILE 1: Pragmatic Learning (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="courses/pragmatic-learning.html">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">Pragmatic Learning: Turning Knowledge into Action</h3>
                                                 <p class="text-gray-600 mt-2 text-sm flex-grow">This short, 25-minute, powerful guide helps you shift from <strong>collecting facts</strong> to <strong>solving problems</strong> by taking purposeful action.</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (COPIED FROM CANVAS 1) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Pragmatic Learning: Turning Knowledge into Action</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">If you feel like you’re stuck in a cycle of learning—reading books and watching videos without seeing real results—you're not alone. The world is full of information. But true learning isn’t about what you know; it’s about what you do with it. This is a short, 25-minute guide to becoming a <strong>Pragmatic Learner</strong>.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">In this course, you will:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Pinpoint the mindset that keeps you hoarding information instead of acting on it.</li>
+                                                        <li>Learn to cut through the noise by focusing only on what's immediately useful.</li>
+                                                        <li>Master a simple method for turning any goal into a tangible first step.</li>
+                                                        <li>Build a repeatable system for connecting every small win to your bigger goals.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <!-- LAUNCH BUTTON NOW USES THE data-course-url FOR NEW PAGE NAVIGATION -->
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
-                                        <!-- COURSE TILE 2: The Unwritten Rules (Link to new dedicated page) -->
-                                        <a href="courses/unwritten-rules.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center">
+                                        <!-- COURSE TILE 2: The Unwritten Rules (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="courses/unwritten-rules.html">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">The Unwritten Rules: Navigating Social & Emotional Intelligence</h3>
                                                 <p class="text-gray-600 mt-2 text-sm flex-grow">Your 30-minute roadmap to building <strong>social and emotional confidence</strong>, understanding unspoken cues, and thriving in any group setting.</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (COPIED FROM CANVAS 1) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">The Unwritten Rules: Navigating Social & Emotional Intelligence</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">Welcome to your 30-minute guide to the unwritten rules of social and emotional intelligence. Navigating friendships, group projects, and family can sometimes feel more complicated than a pop quiz, right? This course is your roadmap to gaining the <strong>confidence to thrive</strong> in any social situation.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Over our journey, you'll discover how to:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Master the art of listening so you can connect with anyone.</li>
+                                                        <li>Crack the code of collaboration to turn any group into a dream team.</li>
+                                                        <li>Give and receive feedback with confidence and grace.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <!-- LAUNCH BUTTON NOW USES THE data-course-url FOR NEW PAGE NAVIGATION -->
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -210,14 +321,38 @@
                                     <!-- Grid for 3 columns on large screens (showing 1 course here) -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
                                         
-                                        <!-- COURSE TILE 3: The AI Co-Pilot (Link to new dedicated page) -->
-                                        <a href="courses/ai-co-pilot.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center">
+                                        <!-- COURSE TILE 3: The AI Co-Pilot (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-dark-cyan transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="courses/ai-co-pilot.html">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-light-cyan transition-colors duration-300">The AI Co-Pilot: A 15-Minute Microlearning Course</h3>
                                                 <p class="text-gray-600 mt-2 text-sm flex-grow">Move past the hype and learn the one skill that makes AI your most valuable asset: <strong>how to talk to it</strong> (prompting and collaboration).</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (COPIED FROM CANVAS 1) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-light-cyan hover:text-allgood-dark-cyan" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">The AI Co-Pilot: A 15-Minute Microlearning Course</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Course Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">The world of work is changing fast. Between AI, endless emails, and a constant flow of information, it’s easy to feel overwhelmed. You don't just need new tools—you need a new mindset. This course is your first step. In less than 15 minutes, we’ll teach you the one skill that will make AI your most valuable <strong>co-pilot: how to talk to it</strong>.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Outcome:</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Master the core concepts of effective prompting to gain actionable results from any AI tool.</li>
+                                                        <li>Adopt a <strong>co-pilot mindset</strong> to integrate AI into your daily workflow, increasing efficiency.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <!-- LAUNCH BUTTON NOW USES THE data-course-url FOR NEW PAGE NAVIGATION -->
+                                                            <button class="launch-course-button bg-allgood-light-cyan text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-dark-cyan transition-colors duration-300 shadow-md text-xs">Start Course</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-dark-cyan text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -237,16 +372,98 @@
         </div>
     </footer>
 
-    <!-- Iframe views, history listeners, and modal JavaScript removed -->
-    <!-- SVG for the progress circle gradient (removed as it's not used) -->
-
     <script>
-        // Removed: loadCourseView, showCatalogView, getCourseIdFromHash, popstate listener
-        // Removed: modal-overlay, close-card-button, exit-button, launch-course-button logic
         
         document.addEventListener('DOMContentLoaded', function () {
             
-            // --- Collapsible Section Logic (Re-implemented for the only necessary JS) ---
+            // --- Modal Interaction Logic (Adapted for new page load) ---
+            function getCourseTilesAndAddListeners() {
+                document.querySelectorAll('.course-tile-link').forEach(tile => {
+                    
+                    // --- Button Handlers ---
+                    const closeButton = tile.querySelector('.close-card-button');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const exitButton = tile.querySelector('.exit-button');
+                    if (exitButton) {
+                        exitButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                             if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const launchButton = tile.querySelector('.launch-course-button');
+                    if (launchButton) {
+                        launchButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            // IMPORTANT: Get the URL from the data attribute set in the HTML
+                            const launchCourseUrl = tile.dataset.courseUrl; 
+                            
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                            
+                            // ACTION: Navigate to the course page (new page load)
+                            if (launchCourseUrl) {
+                                window.location.href = launchCourseUrl;
+                            }
+                        });
+                    }
+                    
+                    // --- Overlay Click Handler (Closes the modal) ---
+                    document.getElementById('modal-overlay').addEventListener('click', function() {
+                         document.querySelectorAll('.course-tile-link.expanded').forEach(expandedTile => {
+                            expandedTile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                         });
+                    });
+
+                    // --- PRIMARY CLICK/TAP HANDLER (Opens the modal) ---
+                    tile.addEventListener('click', function(e) {
+                        // Check if the click target is already one of the action buttons inside the card
+                        const isInternalButton = e.target.closest('.launch-course-button, .exit-button, .close-card-button');
+                        if (isInternalButton) {
+                            // If it's a button, let the button's specific handler run and return
+                            return;
+                        }
+                        
+                        e.preventDefault(); 
+                        
+                        // Toggle the expanded state on any click of the card body
+                        if (tile.classList.contains('expanded')) {
+                            // Close the currently expanded card
+                            tile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                        } else {
+                            // Close any other open cards
+                            document.querySelectorAll('.course-tile-link.expanded').forEach(openTile => {
+                                if(openTile !== tile) {
+                                    openTile.classList.remove('expanded');
+                                }
+                            });
+                            // Open this card
+                            tile.classList.add('expanded');
+                            document.getElementById('modal-overlay').classList.add('active');
+                        }
+                    });
+                });
+            }
+            
+            getCourseTilesAndAddListeners();
+
+            // --- Collapsible Section Logic ---
             document.querySelectorAll('.collapsible-header').forEach(header => {
                 header.addEventListener('click', () => {
                     const section = header.parentElement;
