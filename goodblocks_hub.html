@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5MZLK133E5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-5MZLK133E5');
+    </script>
+    <!-- This is your Google Analytics tracking code. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoodBlocks Hub | Allgood Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Shared Styles for consistent navigation look */
+        .active-nav-link {
+            font-weight: 600;
+            color: #E76F51; /* STANDARD Burnt Orange */
+            text-decoration: underline;
+            text-decoration-color: #E76F51;
+            text-decoration-thickness: 2px;
+            text-underline-offset: 6px;
+        }
+        
+        /* --- 3D FERRIS WHEEL STYLES --- */
+        
+        /* 1. SCENE: Establishes the 3D context (perspective) */
+        .scene {
+            width: 100%;
+            height: 250px; 
+            perspective: 1000px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 2. WHEEL: The rotating element */
+        .wheel {
+            width: 120px; 
+            height: 120px; 
+            position: relative;
+            transform-style: preserve-3d; 
+            animation: rotateWheel 49s linear infinite; 
+            transform: translateZ(-100px) rotateX(0deg); 
+        }
+        
+        /* 3. ITEM: The card itself (The "Bucket") */
+        .carousel-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120px; 
+            height: 120px; 
+            margin-left: -60px; 
+            margin-top: -60px; 
+            
+            background-color: #FBFBFB;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.2), 0 5px 10px -5px rgba(0, 0, 0, 0.1);
+            
+            backface-visibility: hidden; 
+            
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease; 
+            border: 2px solid #E5E7EB; 
+            
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+        }
+        
+        /* Visual feedback on hover */
+        .carousel-item:hover {
+            border-color: #D34716; /* STANDARD Burnt Orange */
+            animation-play-state: paused;
+            transform: scale(1.1); 
+            /* Deep Cyan Shadow */
+            box-shadow: 0 15px 35px -5px rgba(53, 120, 137, 0.4), 0 5px 10px -5px rgba(0, 0, 0, 0.15); 
+        }
+        /* Pauses the wheel animation when an item is hovered */
+        .wheel:has(.carousel-item:hover) {
+            animation-play-state: paused;
+        }
+        .wheel:hover {
+            animation-play-state: running; 
+        }
+        .carousel-item:hover {
+            animation-play-state: paused;
+        }
+
+
+        /* 4. KEYFRAMES: Defines the actual rotation animation */
+        @keyframes rotateWheel {
+            from { transform: rotateX(0deg); } 
+            to { transform: rotateX(360deg); } 
+        }
+
+        /* --- POSITIONING 8 ITEMS IN A CIRCLE (45 degrees separation) --- */
+        .carousel-item:nth-child(1) { transform: rotateX(0deg) translateZ(150px); }
+        .carousel-item:nth-child(2) { transform: rotateX(45deg) translateZ(150px); }
+        .carousel-item:nth-child(3) { transform: rotateX(90deg) translateZ(150px); }
+        .carousel-item:nth-child(4) { transform: rotateX(135deg) translateZ(150px); }
+        .carousel-item:nth-child(5) { transform: rotateX(180deg) translateZ(150px); }
+        .carousel-item:nth-child(6) { transform: rotateX(225deg) translateZ(150px); }
+        .carousel-item:nth-child(7) { transform: rotateX(270deg) translateZ(150px); }
+        .carousel-item:nth-child(8) { transform: rotateX(315deg) translateZ(150px); }
+        
+        /* NEW STYLES FROM INDEX.HTML (for footer/nav links) */
+        .text-allgood-dark-cyan { color: #357889; }
+        .text-allgood-burnt-orange { color: #E76F51; }
+
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'literata': ['Literata', 'serif'],
+                    },
+                    colors: {
+                        'allgood-dark-cyan': '#357889',      
+                        'allgood-light-cyan': '#357889',     
+                        'allgood-burnt-orange': '#E76F51',   /* Standardized Burnt Orange */
+                        'allgood-light-orange': '#EB8D69',   
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-allgood-dark-cyan text-gray-800 font-inter">
+
+    <!-- Header and Navigation (Extracted from index.html) -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="px-8 py-4">
+            <div class="container mx-auto flex items-center justify-between">
+                <!-- Logo on the left --><a href="index.html" class="cursor-pointer">
+                    <img src="https://i.ibb.co/ynkwWGhF/New-Transparent-Logo-1.png" alt="Allgood Academy Logo" class="h-12 w-auto">
+                </a>
+                
+                <!-- Navigation Links on the right -->
+                <div id="main-nav" class="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
+                    
+                    <!-- Home Link (NOT ACTIVE) --><a href="index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Home</a>
+
+                    <!-- Educational Games --><a href="educational_games.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
+
+                    <!-- Purpose-Driven Learning --><a href="purpose_driven_learning.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">
+                        Purpose-Driven Learning
+                    </a>
+                    
+                    <!-- UPDATED: Other Allgood Things Dropdown (ACTIVE) -->
+                    <div class="relative group">
+                        <!-- Main Dropdown Button (ACTIVE STATE) -->
+                        <button class="nav-link active-nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Other Allgood Things</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </button>
+                        <!-- Dropdown Content -->
+                        <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <!-- GoodBlocks Hub (Links to this page and is bolded) -->
+                            <a href="goodblocks_hub.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200 font-bold">GoodBlocks Hub</a>
+                            <!-- Blog -->
+                            <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="other-allgood-things" class="page container mx-auto px-6 py-12">
+        <div class="max-w-7xl mx-auto"> 
+            <section class="text-center mb-10">
+                <h1 class="font-literata text-4xl md:text-5xl font-bold text-white mb-4">
+                    The <span class="text-allgood-burnt-orange">GoodBlocks</span> Hub
+                </h1>
+                <p class="text-white/90 text-lg max-w-4xl mx-auto leading-relaxed">
+                    Welcome to our interactive learning center. These <strong>GoodBlocks</strong> are custom-coded, light-weight modules designed to move you from passive consumption to purposeful action, one tangible lesson at a time.
+                </p>
+            </section>
+
+            <!-- NEW: White Action Block (Now contains the carousel) -->
+            <section class="bg-white p-8 rounded-xl shadow-xl mb-12">
+                
+                <!-- NEW WRAPPER: Constrains the width and centers the content block -->
+                <div class="max-w-sm mx-auto">
+                    
+                    <!-- 3D FERRIS WHEEL CAROUSEL (Moved Here) -->
+                    <!-- Title centered within the new wrapper -->
+                    <h2 class="font-literata text-3xl font-bold text-allgood-dark-cyan text-center mb-6">GoodBlocks</h2>
+                    
+                    <!-- FLEX CONTAINER: Centers the whole clipped area within the new wrapper -->
+                    <div class="flex justify-center">
+                        <!-- FOCUSED VIEWPORT WRAPPER: Fixed size and clips the overflow -->
+                        <div class="w-80 h-64 overflow-hidden relative"> 
+                            <div class="scene h-full">
+                                <div class="wheel">
+                                    
+                                    <!-- Item 1 (Odd - Orange) -->
+                                    <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-burnt-orange text-4xl font-bold block">1</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 1</h3>
+                                    </a>
+
+                                    <!-- Item 2 (Even - Cyan) -->
+                                    <a href="contact_us.html" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-dark-cyan text-4xl font-bold block">2</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 2</h3>
+                                    </a>
+                                    
+                                    <!-- Item 3 (Odd - Orange) -->
+                                    <a href="games/digital-decisions/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-burnt-orange text-4xl font-bold block">3</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 3</h3>
+                                    </a>
+                                    
+                                    <!-- Item 4 (Even - Cyan) -->
+                                    <a href="courses/ai-co-pilot/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-dark-cyan text-4xl font-bold block">4</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 4</h3>
+                                    </a>
+
+                                    <!-- Item 5 (Odd - Orange) -->
+                                    <a href="games/jolene-lemonade/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-burnt-orange text-4xl font-bold block">5</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 5</h3>
+                                    </a>
+                                    
+                                    <!-- Item 6 (Even - Cyan) -->
+                                    <a href="courses/unwritten-rules/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-dark-cyan text-4xl font-bold block">6</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 6</h3>
+                                    </a>
+                                    
+                                    <!-- Item 7 (Odd - Orange) -->
+                                    <a href="games/conflict-resolution/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-burnt-orange text-4xl font-bold block">7</span>
+                                            <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 7</h3>
+                                    </a>
+                                    
+                                    <!-- Item 8 (Even - Cyan) -->
+                                    <a href="courses/pragmatic-learning/" class="carousel-item p-3 transition-all duration-300">
+                                        <span class="text-allgood-dark-cyan text-4xl font-bold block">8</span>
+                                        <h3 class="font-literata text-sm font-semibold text-gray-800 text-center leading-tight">Placeholder 8</h3>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End new wrapper -->
+            </section>
+
+            <!-- Join the Community Button (Purposeful Action Block) -->
+            <section class="mt-12 text-center">
+                <a href="contact_us.html" class="inline-block w-full max-w-xs py-4 px-8 rounded-full font-bold text-xl bg-allgood-burnt-orange text-white shadow-2xl hover:bg-[#D34716] transition duration-300 transform hover:scale-[1.03] active:scale-[0.98]">
+                    Join the Community
+                </a>
+            </section>
+
+            <!-- NEW: Social Links Below Button -->
+            <section class="mt-8 pt-6 border-t border-white/30 text-center">
+                <div class="flex justify-center space-x-6">
+                    <a href="https://www.facebook.com/TheAllgoodAcademy" target="_blank" rel="noopener noreferrer" title="Facebook" class="text-white hover:text-allgood-burnt-orange transition-colors duration-200 text-3xl md:text-4xl">
+                        <i class="fa-brands fa-square-facebook"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/the-allgood-academy/?viewAsMember=true" target="_blank" rel="noopener noreferrer" title="LinkedIn" class="text-white hover:text-allgood-burnt-orange transition-colors duration-200 text-3xl md:text-4xl">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.instagram.com/allgoodacademy/" target="_blank" rel="noopener noreferrer" title="Instagram" class="text-white hover:text-allgood-burnt-orange transition-colors duration-200 text-3xl md:text-4xl">
+                        <i class="fa-brands fa-square-instagram"></i>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer --><footer class="bg-white mt-16 border-t">
+        <div class="container mx-auto px-6 py-8 flex justify-between items-center text-gray-500">
+            <a href="privacy.html" class="hover:text-allgood-light-cyan transition-colors duration-300">Privacy Policy</a>
+            <p>Copyright © 2025, Allgood Academy</p>
+        </div>
+    </footer>
+
+</body>
+</html>
