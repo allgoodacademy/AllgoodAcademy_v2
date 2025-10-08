@@ -64,7 +64,7 @@
             position: relative;
             z-index: 10;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
-            width: 100%; /* Default width for the grid */
+            width: 100%; 
             cursor: pointer; /* Ensure the link is visually clickable */
         }
         
@@ -73,6 +73,68 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); 
             transform: translateY(-4px); /* Subtle lift */
         }
+
+        /* * MODAL STYLES COPIED FROM CANVAS 1 *
+         * These styles create the fixed, overlayed pop-up.
+         */
+        /* Modal Style - Deep Cyan Border for Games/Courses */
+        .course-tile-link.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+            box-shadow: 0 12px 20px 8px rgba(0, 0, 0, 0.4);
+            border-color: #357889; /* Deep Cyan Border */
+            max-width: 600px; 
+            width: auto;
+            min-width: 320px;
+            height: auto;
+            background-color: white;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease-in-out;
+        }
+
+        /* Hide the short content when expanded */
+        .course-tile-link.expanded .course-content-short {
+            display: none;
+        }
+
+        /* Show the full content when expanded */
+        .course-tile-link.expanded .course-content-full {
+            display: block;
+        }
+        
+        /* Hide full content by default and set its properties */
+        .course-content-full {
+            display: none;
+            padding: 2rem;
+            max-height: 80vh; 
+            overflow-y: auto; 
+        }
+        .course-content-full ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 40;
+            display: none;
+            cursor: pointer;
+        }
+        .modal-overlay.active {
+            display: block;
+        }
+        .close-card-button {
+            z-index: 60;
+        }
+        /* END MODAL STYLES */
     </style>
     <script>
         tailwind.config = {
@@ -157,7 +219,8 @@
         </nav>
     </header>
     
-    <!-- Modal overlay is removed -->
+    <!-- Modal overlay (RE-INTRODUCED FOR POPUP FUNCTIONALITY) -->
+    <div id="modal-overlay" class="modal-overlay"></div>
 
     <!-- Page Content Wrapper -->
     <div id="page-content">
@@ -186,24 +249,48 @@
                                 <div class="border-t border-gray-200 pt-6">
                                     <!-- Grid updated for 3 columns on large screens -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
-                                        <!-- Game Tile 1: JOLENE'S LEMONADE CHALLENGE (Link to new dedicated page) -->
-                                        <!-- The entire tile is now a simple link to the dedicated page -->
-                                        <a href="games/jolene-lemonade.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center" data-game-id="jolene-lemonade">
+                                        
+                                        <!-- Game Tile 1: JOLENE'S LEMONADE CHALLENGE (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="games/jolene-lemonade.html" data-game-id="jolene-lemonade">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <img src="https://theallgoodacademy.s3.us-east-2.amazonaws.com/images/Thumbnail.jolenelemonadechallenge.png" alt="Thumbnail for Jolene's Lemonade Challenge game" class="w-3/4 h-auto rounded-md mb-3 border border-gray-100 mx-auto">
                                                 
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-burnt-orange transition-colors duration-300">Jolene's Lemonade Challenge: Entrepreneur to Empire</h3>
                                                 <p class="text-allgood-dark-cyan mt-2 text-sm flex-grow">Test your <span class="font-bold">entrepreneurial grit</span> by guiding Jolene through real-world business challenges, from managing finances to scaling her product.</p>
                                             </div>
-                                            <!-- Full Content View removed as it's now on the dedicated page -->
-                                        </a>
+                                            <!-- Full Content View (ADDED) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-dark-cyan hover:text-allgood-burnt-orange" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Jolene's Lemonade Challenge: Entrepreneur to Empire</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Game Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">This interactive scenario game puts you in charge of a startup lemonade business. Make tough decisions on pricing, marketing, supply chain, and resilience to see if you have the strategic mindset needed to turn a small stand into a national empire.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Objectives</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Apply fundamental principles of business finance and budgeting.</li>
+                                                        <li>Demonstrate market responsiveness and customer feedback integration.</li>
+                                                        <li>Practice strategic decision-making regarding competition and scaling.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-burnt-orange text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-light-orange transition-colors duration-300 shadow-md text-xs">Launch Challenge</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-light-orange text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Collapsible Section 2: Digital Citizenship (Open by default - FIXED) -->
+                    <!-- Collapsible Section 2: Digital Citizenship (Open by default) -->
                     <div class="collapsible-section bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden open">
                         <button class="collapsible-header w-full flex justify-between items-center p-6 sm:p-8 text-left">
                             <h2 class="font-literata text-xl sm:text-2xl font-bold text-allgood-dark-cyan">Digital Citizenship</h2>
@@ -215,38 +302,112 @@
                                     <!-- Grid updated for 3 columns on large screens -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                         
-                                        <!-- Game Tile 3: Digital Decisions CHALLENGE (Link to new dedicated page) -->
-                                        <a href="games/digital-decisions.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center" data-game-id="digital-decisions">
+                                        <!-- Game Tile 3: Digital Decisions CHALLENGE (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="games/digital-decisions.html" data-game-id="digital-decisions">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <img src="https://theallgoodacademy.s3.us-east-2.amazonaws.com/images/thumbnail.digital_decisions_challenge.png" alt="Thumbnail for Digital Decisions Challenge game" class="w-3/4 h-auto rounded-md mb-3 border border-gray-100 mx-auto">
                                                 
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-burnt-orange transition-colors duration-300">Digital Decisions Challenge: Managing Your Online Footprint</h3>
                                                 <p class="text-allgood-dark-cyan mt-2 text-sm flex-grow">Test your <strong>digital citizenship and social skills</strong> by navigating 30 real-world scenarios. Learn to protect your privacy, combat misinformation, and communicate ethically online.</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (ADDED) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-dark-cyan hover:text-allgood-burnt-orange" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Digital Decisions Challenge: Managing Your Online Footprint</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Game Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">The Digital Decisions Challenge is an interactive training exercise that puts you in control of your online identity. You will face 30 realistic, high-stakes scenarios involving privacy, online communication, misinformation, and ethical dilemmas. Your choices are categorized by effectiveness to help you immediately see the impact of your actions and build a purpose-driven digital brand.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Objectives</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Demonstrate ethical communication and empathy when resolving online conflicts or offering constructive feedback.</li>
+                                                        <li>Apply critical thinking to identify phishing, misinformation, and unreliable sources.</li>
+                                                        <li>Manage and protect your digital footprint by practicing strong password hygiene and controlling personal data sharing.</li>
+                                                        <li>Uphold digital integrity by respecting intellectual property and responding appropriately to cyberbullying or privacy violations.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-burnt-orange text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-light-orange transition-colors duration-300 shadow-md text-xs">Launch Challenge</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-light-orange text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
-                                        <!-- Game Tile 4: CONFLICT RESOLUTION CHALLENGE (Link to new dedicated page) -->
-                                        <a href="games/conflict-resolution.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center" data-game-id="conflict-resolution">
+                                        <!-- Game Tile 4: CONFLICT RESOLUTION CHALLENGE (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="games/conflict-resolution.html" data-game-id="conflict-resolution">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <img src="https://theallgoodacademy.s3.us-east-2.amazonaws.com/images/thumbnail_conflict_resolution_challenge.png" alt="Thumbnail for Conflict Resolution Challenge game" class="w-3/4 h-auto rounded-md mb-3 border border-gray-100 mx-auto">
                                                 
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-burnt-orange transition-colors duration-300">Conflict Resolution Challenge: Navigating Disagreement</h3>
                                                 <p class="text-allgood-dark-cyan mt-2 text-sm flex-grow">Master <strong>high-stakes communication</strong> by using empathy and assertive language to mediate disagreements, set boundaries, and turn everyday friction into <strong>positive collaboration</strong> in both digital and real-world settings.</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (ADDED) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-dark-cyan hover:text-allgood-burnt-orange" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Conflict Resolution Challenge: Navigating Disagreement</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Game Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">The Conflict Resolution Challenge is an interactive training simulation designed to sharpen your social and emotional intelligence in both personal and professional scenarios. You will practice assertive communication, non-judgmental mediation, and boundary-setting strategies necessary to resolve conflicts, prevent misunderstandings, and build strong, purposeful relationships.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Objectives</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Master assertive communication strategies, including the use of "I-statements," to express needs without blame.</li>
+                                                        <li>Demonstrate collaborative leadership by effectively mediating group friction and steering teams toward consensus.</li>
+                                                        <li>Develop the ability to set and maintain healthy boundaries in personal and digital interactions (e.g., managing interruptions, loaning items, dealing with constant texts).</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-burnt-orange text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-light-orange transition-colors duration-300 shadow-md text-xs">Launch Challenge</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-light-orange text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                        <!-- Game Tile 5: PURPOSEFUL COMMUNICATOR CHALLENGE (Link to new dedicated page) -->
-                                        <a href="games/purposeful-communicator.html" class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center" data-game-id="purposeful-communicator">
+                                        <!-- Game Tile 5: PURPOSEFUL COMMUNICATOR CHALLENGE (CONVERTED TO DIV + MODAL) -->
+                                        <div class="course-tile-link group bg-white rounded-xl shadow-lg border-t-8 border-allgood-burnt-orange transition-all duration-300 flex flex-col overflow-hidden text-center cursor-pointer" data-course-url="games/purposeful-communicator.html" data-game-id="purposeful-communicator">
                                             <div class="p-4 flex flex-col flex-grow course-content-short">
                                                 <img src="https://theallgoodacademy.s3.us-east-2.amazonaws.com/images/thumbnail_purposeful_communicator_challenge.png" alt="Thumbnail for Purposeful Communicator Challenge game" class="w-3/4 h-auto rounded-md mb-3 border border-gray-100 mx-auto">
                                                 
                                                 <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan group-hover:text-allgood-burnt-orange transition-colors duration-300">Purposeful Communicator Challenge: Master Your Message</h3>
                                                 <p class="text-allgood-dark-cyan mt-2 text-sm flex-grow">Master the art of <strong>positive influence</strong> and <strong>clear communication</strong>. Learn to craft messages, give constructive feedback, and lead digital conversations with purpose and empathy.</p>
                                             </div>
-                                            <!-- Full Content View removed -->
-                                        </a>
+                                            <!-- Full Content View (ADDED) -->
+                                            <div class="course-content-full">
+                                                <button class="close-card-button absolute top-2 right-2 text-allgood-dark-cyan hover:text-allgood-burnt-orange" title="Close">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                                <div class="max-w-md w-full text-left">
+                                                    <h3 class="font-literata text-lg font-semibold text-allgood-dark-cyan mb-4">Purposeful Communicator Challenge: Master Your Message</h3>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Game Description</h4>
+                                                    <p class="text-gray-600 mt-1 text-sm leading-relaxed mb-4">This interactive training focuses on transforming how you express yourself in the digital age. You will learn to shift from reactive posting to proactive, thoughtful communication. Scenarios focus on mastering tone, giving and receiving constructive feedback, leading group discussions, and building a reputation as a reliable and respected voice in any community.</p>
+                                                    <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-4">Learning Objectives</h4>
+                                                    <ul class="text-gray-600 text-sm text-left w-full mt-2 space-y-1 list-disc pl-5">
+                                                        <li>Craft messages that are clear, empathetic, and constructive in online and real-time environments.</li>
+                                                        <li>Practice active listening and validating others' perspectives to strengthen relationships.</li>
+                                                        <li>Utilize feedback techniques to mentor peers and guide group conversations effectively.</li>
+                                                        <li>Develop a reputation as a reliable and purposeful leader through consistent, positive communication habits.</li>
+                                                    </ul>
+                                                    <div class="mt-6 pt-4 border-t border-gray-200">
+                                                        <div class="flex justify-center space-x-4">
+                                                            <button class="launch-course-button bg-allgood-burnt-orange text-white font-bold py-2 px-4 rounded-lg hover:bg-allgood-light-orange transition-colors duration-300 shadow-md text-xs">Launch Challenge</button> 
+                                                            <button class="exit-button bg-transparent hover:bg-allgood-light-orange text-allgood-dark-cyan hover:text-white border border-allgood-dark-cyan font-bold py-2 px-4 rounded-lg text-xs transition-colors duration-300">Exit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -266,14 +427,99 @@
         </div>
     </footer>
 
-    <!-- Iframe views, history listeners, and modal JavaScript removed -->
     <script>
-        // Removed: loadGameView, showCatalogView, getGameIdFromHash, popstate listener
-        // Removed: modal-overlay, close-card-button, exit-button, launch-course-button logic
         
         document.addEventListener('DOMContentLoaded', function () {
             
-            // --- Collapsible Section Logic (Re-implemented for the only necessary JS) ---
+            // --- Modal Interaction Logic (Re-implemented and Adapted) ---
+            function getCourseTilesAndAddListeners() {
+                // Selects all game tiles
+                document.querySelectorAll('.course-tile-link').forEach(tile => {
+                    
+                    // --- Button Handlers ---
+                    const closeButton = tile.querySelector('.close-card-button');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const exitButton = tile.querySelector('.exit-button');
+                    if (exitButton) {
+                        exitButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                             if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const launchButton = tile.querySelector('.launch-course-button');
+                    if (launchButton) {
+                        launchButton.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            // IMPORTANT: Get the URL from the data attribute set in the HTML
+                            const launchCourseUrl = tile.dataset.courseUrl; 
+                            
+                            if (tile.classList.contains('expanded')) {
+                                tile.classList.remove('expanded');
+                                document.getElementById('modal-overlay').classList.remove('active');
+                            }
+                            
+                            // ACTION: Navigate to the course page (new page load, as requested)
+                            if (launchCourseUrl) {
+                                window.location.href = launchCourseUrl;
+                            }
+                        });
+                    }
+                    
+                    // --- Overlay Click Handler (Closes the modal) ---
+                    document.getElementById('modal-overlay').addEventListener('click', function() {
+                         document.querySelectorAll('.course-tile-link.expanded').forEach(expandedTile => {
+                            expandedTile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                         });
+                    });
+
+                    // --- PRIMARY CLICK/TAP HANDLER (Opens the modal) ---
+                    tile.addEventListener('click', function(e) {
+                        // Check if the click target is already one of the action buttons inside the card
+                        const isInternalButton = e.target.closest('.launch-course-button, .exit-button, .close-card-button');
+                        if (isInternalButton) {
+                            // If it's a button, let the button's specific handler run and return
+                            return;
+                        }
+                        
+                        e.preventDefault(); 
+                        
+                        // Toggle the expanded state on any click of the card body
+                        if (tile.classList.contains('expanded')) {
+                            // Close the currently expanded card
+                            tile.classList.remove('expanded');
+                            document.getElementById('modal-overlay').classList.remove('active');
+                        } else {
+                            // Close any other open cards
+                            document.querySelectorAll('.course-tile-link.expanded').forEach(openTile => {
+                                if(openTile !== tile) {
+                                    openTile.classList.remove('expanded');
+                                }
+                            });
+                            // Open this card
+                            tile.classList.add('expanded');
+                            document.getElementById('modal-overlay').classList.add('active');
+                        }
+                    });
+                });
+            }
+            
+            getCourseTilesAndAddListeners();
+
+            // --- Collapsible Section Logic ---
             document.querySelectorAll('.collapsible-header').forEach(header => {
                 header.addEventListener('click', () => {
                     const section = header.parentElement;
