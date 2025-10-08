@@ -20,7 +20,8 @@
     <!-- Libraries for interactive hero -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
-    <!-- PLACE GOOGLE ANALYTICS (GA4) SCRIPT HERE -->
+    <!-- NEW DEPENDENCY: Font Awesome for high-quality social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8y/H0wZ/U9fKjT2YtGz3l8L035qQ7B1tT84YhE/v9z0V9Wk+I2v74W83jLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <style>
         /* Ensures all images are responsive */
@@ -31,9 +32,9 @@
         /* Style for the active navigation link */
         .active-nav-link {
             font-weight: 600;
-            color: #E76F51; /* allgood-burnt-orange */
+            color: #D34716; /* allgood-burnt-orange */
             text-decoration: underline;
-            text-decoration-color: #E76F51; /* allgood-burnt-orange */
+            text-decoration-color: #D34716; /* allgood-burnt-orange (FIXED to D34716) */
             text-decoration-thickness: 2px;
             text-underline-offset: 6px;
         }
@@ -49,13 +50,13 @@
         }
         .collapsible-section.open .collapsible-arrow {
             transform: rotate(180deg);
-            color: #E76F51; /* Change color to burnt orange when open */
+            color: #D34716; /* Change color to burnt orange (FIXED to D34716) when open */
         }
         .plus-text {
-            color: #E76F51; /* Burnt Orange */
+            color: #D34716; /* Burnt Orange (FIXED to D34716) */
         }
         .nav-link:hover .plus-text, .active-nav-link .plus-text {
-            color: #0A9396; /* Light Cyan */
+            color: #357889; /* Deep Cyan (FIXED to 357889) */
         }
         
         /* Base tile link style */
@@ -72,8 +73,6 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); 
             transform: translateY(-4px); /* Subtle lift */
         }
-        
-        /* Modal-related styles are no longer needed here as the modal is removed */
     </style>
     <script>
         tailwind.config = {
@@ -85,10 +84,10 @@
                     },
                     // Allgood Academy Brand Colors (Using updated hex values for consistency)
                     colors: {
-                        'allgood-dark-cyan': '#357889',
-                        'allgood-light-cyan': '#357889',
-                        'allgood-burnt-orange': '#e76f51',
-                        'allgood-light-orange': '#EB8D69',
+                        'allgood-dark-cyan': '#357889',      /* Deep Cyan */
+                        'allgood-light-cyan': '#357889',     /* Mapping to Deep Cyan for consistency */
+                        'allgood-burnt-orange': '#D34716',   /* Burnt Orange (FIXED to D34716) */
+                        'allgood-light-orange': '#EB8D69',   /* Light Orange (FIXED to EB8D69) */
                     },
                     fontSize: {
                         'xxs': ['0.6rem', { lineHeight: '0.9rem' }],
@@ -137,7 +136,7 @@
                         Purpose-Driven Learning
                     </a>
                     
-                    <!-- Dropdown Menu: Other Allgood Things (Simplified) -->
+                    <!-- Dropdown Menu: Other Allgood Things (UPDATED to include GoodBlocks Hub) -->
                     <div class="relative group">
                         <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
                             <span>Other Allgood Things</span>
@@ -146,6 +145,10 @@
                             </svg>
                         </button>
                         <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <!-- NEW: GoodBlocks Hub Link -->
+                            <a href="goodblocks_hub.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">GoodBlocks Hub</a>
+                            
+                            <!-- Existing Blog Link -->
                             <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
                         </div>
                     </div>
@@ -287,5 +290,3 @@
 
 </body>
 </html>
-
-
