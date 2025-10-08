@@ -18,14 +18,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Literata:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome dependency added for consistency -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Shared Styles for consistent navigation look */
         .active-nav-link {
             font-weight: 600;
-            color: #E76F51; /* STANDARD Burnt Orange */
+            color: #D34716; /* FIXED to official Burnt Orange */
             text-decoration: underline;
-            text-decoration-color: #E76F51;
+            text-decoration-color: #D34716;
             text-decoration-thickness: 2px;
             text-underline-offset: 6px;
         }
@@ -79,7 +80,7 @@
         
         /* Visual feedback on hover */
         .carousel-item:hover {
-            border-color: #D34716; /* STANDARD Burnt Orange */
+            border-color: #D34716; /* FIXED to official Burnt Orange */
             animation-play-state: paused;
             transform: scale(1.1); 
             /* Deep Cyan Shadow */
@@ -115,7 +116,7 @@
         
         /* NEW STYLES FROM INDEX.HTML (for footer/nav links) */
         .text-allgood-dark-cyan { color: #357889; }
-        .text-allgood-burnt-orange { color: #E76F51; }
+        .text-allgood-burnt-orange { color: #D34716; } /* FIXED to official Burnt Orange */
 
     </style>
     <script>
@@ -129,7 +130,7 @@
                     colors: {
                         'allgood-dark-cyan': '#357889',      
                         'allgood-light-cyan': '#357889',     
-                        'allgood-burnt-orange': '#E76F51',   /* Standardized Burnt Orange */
+                        'allgood-burnt-orange': '#D34716',   /* FIXED to official Burnt Orange */
                         'allgood-light-orange': '#EB8D69',   
                     },
                 }
@@ -139,7 +140,7 @@
 </head>
 <body class="bg-allgood-dark-cyan text-gray-800 font-inter">
 
-    <!-- Header and Navigation (Extracted from index.html) -->
+    <!-- Header and Navigation (SYNCHRONIZED) -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="px-8 py-4">
             <div class="container mx-auto flex items-center justify-between">
@@ -150,7 +151,19 @@
                 <!-- Navigation Links on the right -->
                 <div id="main-nav" class="flex items-center space-x-2 sm:space-x-4 md:space-x-6">
                     
-                    <!-- Home Link (NOT ACTIVE) --><a href="index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Home</a>
+                    <!-- Home Dropdown (NOT ACTIVE) -->
+                    <div class="relative group">
+                         <a href="index.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                            <span>Home</span>
+                            <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </a>
+                        <!-- Dropdown Content: Only Contact Us -->
+                        <div class="absolute left-0 w-40 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
+                            <a href="contact_us.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Contact Us</a>
+                        </div>
+                    </div>
 
                     <!-- Educational Games --><a href="educational_games.html" class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap">Educational Games</a>
 
@@ -158,10 +171,10 @@
                         Purpose-Driven Learning
                     </a>
                     
-                    <!-- UPDATED: Other Allgood Things Dropdown (ACTIVE) -->
+                    <!-- Dropdown Menu: Other Allgood Things (ACTIVE) -->
                     <div class="relative group">
-                        <!-- Main Dropdown Button (ACTIVE STATE) -->
-                        <button class="nav-link active-nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
+                        <!-- Removed active-nav-link from button -->
+                        <button class="nav-link text-allgood-dark-cyan hover:text-allgood-light-cyan transition duration-300 px-3 py-2 text-sm sm:text-lg font-literata font-bold whitespace-nowrap flex items-center focus:outline-none">
                             <span>Other Allgood Things</span>
                             <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -169,8 +182,8 @@
                         </button>
                         <!-- Dropdown Content -->
                         <div class="absolute right-0 w-56 bg-white rounded-md shadow-lg py-1 z-50 hidden group-hover:block">
-                            <!-- GoodBlocks Hub (Links to this page and is bolded) -->
-                            <a href="goodblocks_hub.html" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200 font-bold">GoodBlocks Hub</a>
+                            <!-- ADDED active-nav-link to the GoodBlocks Hub page link -->
+                            <a href="goodblocks_hub.html" class="block px-4 py-2 text-sm active-nav-link text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">GoodBlocks Hub</a>
                             <!-- Blog -->
                             <a href="https://medium.com/@allgoodacademy" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-allgood-dark-cyan hover:bg-gray-100 hover:text-allgood-light-cyan transition-colors duration-200">Blog</a>
                         </div>
